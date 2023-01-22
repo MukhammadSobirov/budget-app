@@ -6,7 +6,6 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,8 +15,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { Category, Home, Logout, Paid, Wallet } from "@mui/icons-material";
+import { Stack } from "@mui/system";
+import { AccountPopover } from "../AccountPopover";
+import { Avatar } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -88,6 +89,9 @@ export default function DashboardLayout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const settingsRef = React.useRef(null);
+  const [openAccountPopover, setOpenAccountPopover] = React.useState(false);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -113,9 +117,24 @@ export default function DashboardLayout({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
+          <Stack direction="row" width={"100%"} justifyContent="flex-end">
+            <Avatar
+              onClick={() => setOpenAccountPopover(true)}
+              ref={settingsRef}
+              sx={{
+                cursor: "pointer",
+                height: 40,
+                width: 40,
+                ml: 1,
+              }}
+              src="/static/images/avatars/avatar_1.png"
+            />
+            <AccountPopover
+              anchorEl={settingsRef.current}
+              open={openAccountPopover}
+              onClose={() => setOpenAccountPopover(false)}
+            />
+          </Stack>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -126,7 +145,7 @@ export default function DashboardLayout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          {["Home", "Wallets", "Categories", "Transactions"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -142,7 +161,7 @@ export default function DashboardLayout({ children }) {
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 ? <Home /> : index === 1 ? <Wallet /> : index === 2 ? <Category /> : <Paid />}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -151,28 +170,26 @@ export default function DashboardLayout({ children }) {
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                <Logout color="error" />
+              </ListItemIcon>
+              <ListItemText primary={"Log out"} sx={{ opacity: open ? 1 : 0, color: "tomato" }} />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
