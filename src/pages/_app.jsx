@@ -6,9 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import theme from "../lib/mui/theme";
 import createEmotionCache from "../lib/mui/createEmotionCache";
+import { registerChartJs } from "@/lib/charts-config";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
+
+registerChartJs();
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
