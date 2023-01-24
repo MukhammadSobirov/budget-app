@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/system";
 
 const StatWidget = ({ title, value, icon, color, currency }) => {
   return (
-    <Paper sx={{ padding: "15px 20px", width: "250px", height: "150px" }}>
+    <Paper sx={{ padding: "15px 20px", width: "220px", height: "150px" }}>
       <Stack direction={"row"} justifyContent="space-between" alignItems="center" mb={2}>
         <Stack>
           <Typography variant="body1">{title}</Typography>
@@ -20,7 +20,7 @@ const StatWidget = ({ title, value, icon, color, currency }) => {
           {icon}
         </Box>
       </Stack>
-      <Typography variant="h4">
+      <Typography variant="h5">
         {currency}
         {value}
       </Typography>

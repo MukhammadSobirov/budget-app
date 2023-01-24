@@ -1,7 +1,7 @@
 "use client";
 import { Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import { Balance } from "@mui/icons-material";
+import { Balance, Percent } from "@mui/icons-material";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import StatWidget from "@/components/StatWidget";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -9,7 +9,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 export default function DashboardPage() {
   return (
     <Container>
-      <Stack direction={"row"} gap="20px" alignItems="center" justifyContent={"center"} flexWrap={"wrap"}>
+      <Stack direction={"row"} gap="20px" alignItems="center" flexWrap={"wrap"}>
         <StatWidget
           title={"Balance"}
           value="100.00"
@@ -30,6 +30,14 @@ export default function DashboardPage() {
           icon={<AddBoxIcon sx={{ color: "white" }} />}
           color="green"
           currency="$"
+        />
+
+        <StatWidget
+          title={"Monthly Change"}
+          value="+23%"
+          icon={<Percent sx={{ color: "white" }} />}
+          color="blue"
+          currency=""
         />
       </Stack>
     </Container>
