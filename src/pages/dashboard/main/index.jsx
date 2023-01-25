@@ -6,6 +6,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import SalesGraph from "@/components/dashboard/SalesGraph";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PieChart from "@/components/dashboard/PieChart";
+import LatestTransactions from "@/components/dashboard/LatestTransactions";
 
 export default function DashboardPage() {
   return (
@@ -53,6 +54,9 @@ export default function DashboardPage() {
           </Grid>
           <Grid item xs={12} md={4}>
             <PieChart sx={{ height: "100%" }} title="Expenses by Category" />
+          </Grid>
+          <Grid item xs={12}>
+            <LatestTransactions />
           </Grid>
         </Grid>
       </Container>
