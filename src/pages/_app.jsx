@@ -16,6 +16,8 @@ registerChartJs();
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -23,7 +25,7 @@ export default function MyApp(props) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>
     </CacheProvider>
   );

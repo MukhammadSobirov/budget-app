@@ -7,10 +7,14 @@ import SalesGraph from "@/components/dashboard/SalesGraph";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PieChart from "@/components/dashboard/PieChart";
 import LatestTransactions from "@/components/dashboard/LatestTransactions";
+import Head from "next/head";
 
-export default function DashboardPage() {
+function Page() {
   return (
-    <DashboardLayout>
+    <>
+      <Head>
+        <title>Wallet | Budget</title>
+      </Head>
       <Container>
         <Grid container spacing={1}>
           <Grid item xs={12} md={3}>
@@ -60,6 +64,10 @@ export default function DashboardPage() {
           </Grid>
         </Grid>
       </Container>
-    </DashboardLayout>
+    </>
   );
 }
+
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export default Page;
