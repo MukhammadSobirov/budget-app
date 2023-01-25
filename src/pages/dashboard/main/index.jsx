@@ -1,11 +1,11 @@
-import { Box, Container, Grid } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Container, Grid } from "@mui/material";
 import { Balance, Percent } from "@mui/icons-material";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import StatWidget from "@/components/dashboard/StatWidget";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import SalesGraph from "@/components/dashboard/SalesGraph";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
+import PieChart from "@/components/dashboard/PieChart";
 
 export default function DashboardPage() {
   return (
@@ -50,6 +50,9 @@ export default function DashboardPage() {
         <Grid container spacing={1} mt={2}>
           <Grid item xs={12} md={8}>
             <SalesGraph />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <PieChart sx={{ height: "100%" }} title="Expenses by Category" />
           </Grid>
         </Grid>
       </Container>
