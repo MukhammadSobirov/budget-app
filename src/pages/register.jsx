@@ -43,9 +43,6 @@ const Register = () => {
         }}
       >
         <Container maxWidth="sm">
-          <NextLink href="/">
-            <Button startIcon={<ArrowBackIcon fontSize="small" />}>Dashboard</Button>
-          </NextLink>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
@@ -143,7 +140,7 @@ const Register = () => {
               </Button>
             </Box>
             <Typography color="textSecondary" variant="body2">
-              Have an account? <NextLink href="/login">Sign In</NextLink>
+              Have an account? <NextLink href="/">Sign In</NextLink>
             </Typography>
           </form>
         </Container>

@@ -25,7 +25,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Login | Budget </title>
       </Head>
       <Box
         component="main"
