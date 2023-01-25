@@ -89,7 +89,7 @@ const SalesGraph = (props) => {
             Last 7 days
           </Button>
         }
-        title="Latest Sales"
+        title="Latest Transactions"
       />
       <Divider />
       <CardContent>
@@ -111,7 +111,7 @@ const SalesGraph = (props) => {
         }}
       >
         <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
-          Overview
+          Learn more
         </Button>
       </Box>
     </Card>
