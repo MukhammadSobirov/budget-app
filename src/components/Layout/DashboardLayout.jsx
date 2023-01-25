@@ -15,10 +15,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Category, Home, Logout, Paid, Wallet } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { AccountPopover } from "../AccountPopover";
-import { Avatar } from "@mui/material";
+import { Avatar, Link } from "@mui/material";
+import { dashboardRoutes } from "@/routes/dahsboard-routes";
+import NextLink from "next/link";
 
 const drawerWidth = 240;
 
@@ -145,27 +147,34 @@ export default function DashboardLayout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Home", "Wallets", "Categories", "Transactions"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {dashboardRoutes.map((route) => (
+            <Link
+              component={NextLink}
+              href={route.path}
+              key={route.name}
+              sx={{ textDecoration: "none", color: "inherit" }}
+            >
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  {index === 0 ? <Home /> : index === 1 ? <Wallet /> : index === 2 ? <Category /> : <Paid />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {route.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={route.name} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
