@@ -18,9 +18,11 @@ import ListItemText from "@mui/material/ListItemText";
 import { Logout } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { AccountPopover } from "../AccountPopover";
-import { Avatar, Link } from "@mui/material";
+import { Avatar, LinearProgress, Link } from "@mui/material";
 import { dashboardRoutes } from "@/routes/dahsboard-routes";
 import NextLink from "next/link";
+import router from "next/router";
+import { useSession, signOut } from "next-auth/react";
 
 const drawerWidth = 240;
 
@@ -102,6 +104,14 @@ export default function DashboardLayout({ children }) {
     setOpen(false);
   };
 
+  // next auth
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/");
+    },
+  });
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -179,7 +189,7 @@ export default function DashboardLayout({ children }) {
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => signOut({ callbackUrl: "/" })}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -203,6 +213,7 @@ export default function DashboardLayout({ children }) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
+        {status === "loading" && <LinearProgress />}
         {children}
       </Box>
     </Box>
