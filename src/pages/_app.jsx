@@ -7,6 +7,9 @@ import { CacheProvider } from "@emotion/react";
 import theme from "../lib/mui/theme";
 import createEmotionCache from "../lib/mui/createEmotionCache";
 import { registerChartJs } from "@/lib/charts-config";
+import { SessionProvider } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -20,13 +23,16 @@ export default function MyApp(props) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {getLayout(<Component {...pageProps} />)}
-      </ThemeProvider>
+      <SessionProvider session={pageProps.session}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {getLayout(<Component {...pageProps} />)}
+          <ToastContainer />
+        </ThemeProvider>
+      </SessionProvider>
     </CacheProvider>
   );
 }

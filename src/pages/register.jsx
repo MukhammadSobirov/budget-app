@@ -4,8 +4,9 @@ import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, Checkbox, Container, FormHelperText, TextField, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Google } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { Stack } from "@mui/system";
 
 const Register = () => {
   const formik = useFormik({
@@ -23,8 +24,28 @@ const Register = () => {
       password: Yup.string().max(255).required("Password is required"),
       policy: Yup.boolean().oneOf([true], "This field must be checked"),
     }),
-    onSubmit: () => {
-      Router.push("/").catch(console.error);
+    onSubmit: async (values) => {
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: values.email,
+            name: values.firstName,
+            password: values.password,
+            surname: values.lastName,
+          }),
+        });
+        const data = await res.json();
+
+        console.log(data);
+
+        Router.push("/");
+      } catch (err) {
+        toast.error(err.message);
+      }
     },
   });
 
@@ -117,7 +138,7 @@ const Register = () => {
             {Boolean(formik.touched.policy && formik.errors.policy) && (
               <FormHelperText error>{formik.errors.policy}</FormHelperText>
             )}
-            <Box sx={{ py: 2 }}>
+            <Stack spacing={2} sx={{ py: 2 }}>
               <Button
                 color="primary"
                 disabled={formik.isSubmitting}
@@ -138,7 +159,7 @@ const Register = () => {
               >
                 Login with Google
               </Button>
-            </Box>
+            </Stack>
             <Typography color="textSecondary" variant="body2">
               Have an account? <NextLink href="/">Sign In</NextLink>
             </Typography>

@@ -6,8 +6,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { Google } from "@mui/icons-material";
+import { signIn, useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Login = () => {
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      Router.push("/dashboard");
+    }
+  }, [session.status]);
+
   const formik = useFormik({
     initialValues: {
       email: "demo@devias.io",
@@ -17,8 +28,16 @@ const Login = () => {
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
       password: Yup.string().max(255).required("Password is required"),
     }),
-    onSubmit: () => {
-      Router.push("/").catch(console.error);
+    onSubmit: async (data) => {
+      try {
+        await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+      } catch (error) {
+        toast.error(error.message);
+      }
     },
   });
 
@@ -82,6 +101,7 @@ const Login = () => {
               type="email"
               value={formik.values.email}
               variant="outlined"
+              autoComplete="email"
             />
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
@@ -95,6 +115,7 @@ const Login = () => {
               type="password"
               value={formik.values.password}
               variant="outlined"
+              autoComplete="current-password"
             />
             <Box sx={{ py: 2 }}>
               <Button
