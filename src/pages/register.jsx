@@ -26,7 +26,7 @@ const Register = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const res = await fetch("/api/auth/register", {
+        await fetch("/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,9 +38,6 @@ const Register = () => {
             surname: values.lastName,
           }),
         });
-        const data = await res.json();
-
-        console.log(data);
 
         Router.push("/");
       } catch (err) {

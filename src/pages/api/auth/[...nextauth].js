@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../../prisma/prisma";
@@ -12,7 +13,6 @@ export const authOptions = {
       type: "credentials",
       credentials: {},
       async authorize(credentials, req) {
-        console.log("credentials", credentials);
         try {
           const { email, password } = credentials;
 
@@ -32,9 +32,7 @@ export const authOptions = {
           }
           const { password: _, ...userWithoutPassword } = user;
           return userWithoutPassword;
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       }, // end of authorize
     }), // end of CredentialsProvider
   ], // end of providers
