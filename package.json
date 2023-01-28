@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "latest",
     "@next/font": "13.1.4",
+    "@prisma/client": "^4.9.0",
     "date-fns": "^2.29.3",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
