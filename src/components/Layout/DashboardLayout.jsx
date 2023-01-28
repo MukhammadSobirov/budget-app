@@ -105,7 +105,7 @@ export default function DashboardLayout({ children }) {
   };
 
   // next auth
-  const { status } = useSession({
+  const { status, data } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/");
@@ -139,7 +139,7 @@ export default function DashboardLayout({ children }) {
                 width: 40,
                 ml: 1,
               }}
-              src="/static/images/avatars/avatar_1.png"
+              src={data?.user?.avatar}
             />
             <AccountPopover
               anchorEl={settingsRef.current}
