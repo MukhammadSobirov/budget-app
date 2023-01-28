@@ -161,7 +161,7 @@ const CategoriesListResults = ({ categories, ...rest }) => {
 };
 
 CategoriesListResults.propTypes = {
-  Categories: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 
 export default CategoriesListResults;
