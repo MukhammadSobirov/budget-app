@@ -17,11 +17,17 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { colors } from "@/__mocks__/colors";
 import { currencies } from "@/__mocks__/currencies";
+import { useDispatch } from "react-redux";
+import { createWallet } from "@/redux/features/wallets/walletThunk";
 
 const WalletListToolbar = (props) => {
+  // Generic modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // redux
+  const dispatch = useDispatch();
 
   // formik implementation
   const formik = useFormik({
@@ -39,6 +45,9 @@ const WalletListToolbar = (props) => {
     }),
     onSubmit: async (values) => {
       //TODO: implement wallet creation with redux async thunks
+      dispatch(createWallet(values));
+      handleClose();
+      formik.resetForm();
     },
   });
 
