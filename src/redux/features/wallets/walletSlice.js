@@ -19,10 +19,10 @@ const walletSlice = createSlice({
       })
       .addCase(createWallet.fulfilled, (state, action) => {
         state.status = "idle";
-        state.wallets = action.payload.wallets;
+        state.wallets = [...state.wallets, action.payload.wallets];
       })
       .addCase(createWallet.rejected, (state) => {
-        state.status = "idle";
+        state.status = "failed";
         toast.error("Failed to create wallet");
       });
   },

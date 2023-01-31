@@ -35,7 +35,7 @@ const WalletListToolbar = (props) => {
       name: "",
       color: "",
       currency: "",
-      balance: "",
+      balance: 0,
     },
     validationSchema: Yup.object({
       name: Yup.string().max(255).required("Name is required"),
@@ -44,7 +44,6 @@ const WalletListToolbar = (props) => {
       balance: Yup.number().notRequired("Balance is required"),
     }),
     onSubmit: async (values) => {
-      //TODO: implement wallet creation with redux async thunks
       dispatch(createWallet(values));
       handleClose();
       formik.resetForm();
