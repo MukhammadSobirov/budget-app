@@ -213,8 +213,7 @@ export default function DashboardLayout({ children }) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {status === "loading" && <LinearProgress />}
-        {children}
+        {status === "loading" ? <LinearProgress /> : children}
       </Box>
     </Box>
   );
