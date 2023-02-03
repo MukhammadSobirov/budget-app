@@ -10,3 +10,8 @@ export const createWallet = createAsyncThunk("wallet/createWallet", async (paylo
   });
   return await response.json();
 });
+
+export const fetchWallets = createAsyncThunk("wallet/fetchWallets", async () => {
+  const response = await fetch("/api/wallet");
+  return await response.json();
+});

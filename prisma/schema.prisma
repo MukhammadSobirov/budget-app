@@ -28,13 +28,14 @@ model User {
 }
 
 model Wallet {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id    String   @map("user_id") @db.ObjectId
-  user       User     @relation(fields: [user_id], references: [id])
-  balance    Float    @default(0)
-  name       String
-  color      String
-  currency   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id     String   @map("user_id") @db.ObjectId
+  user        User     @relation(fields: [user_id], references: [id])
+  balance     Float    @default(0)
+  description String?
+  name        String
+  color       String
+  currency    String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }

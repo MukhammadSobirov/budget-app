@@ -36,12 +36,14 @@ const WalletListToolbar = (props) => {
       color: "",
       currency: "",
       balance: 0,
+      description: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().max(255).required("Name is required"),
       color: Yup.string().max(255).required("Wallet color is required"),
       currency: Yup.string().max(255).required("Currency is required"),
-      balance: Yup.number().notRequired("Balance is required"),
+      balance: Yup.number().notRequired(),
+      description: Yup.string().max(255).notRequired(),
     }),
     onSubmit: async (values) => {
       dispatch(createWallet(values));
@@ -127,6 +129,20 @@ const WalletListToolbar = (props) => {
                   value={formik.values.balance}
                   variant="outlined"
                 />
+
+                <TextField
+                  fullWidth
+                  label="Description"
+                  margin="normal"
+                  name="description"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.description}
+                  variant="outlined"
+                  multiline
+                  rows={4}
+                />
+
                 <Button color="primary" variant="contained" type="submit">
                   Create
                 </Button>

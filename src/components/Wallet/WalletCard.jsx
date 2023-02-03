@@ -24,7 +24,7 @@ const WalletCard = ({ wallet, ...rest }) => (
         <Wallet sx={{ color: wallet.color, fontSize: "5rem" }} />
       </Box>
       <Typography align="center" color="textPrimary" gutterBottom variant="h5">
-        {wallet.title}
+        {wallet.name}
       </Typography>
       <Typography align="center" color="textPrimary" variant="body1">
         {wallet.description}
@@ -43,7 +43,7 @@ const WalletCard = ({ wallet, ...rest }) => (
         >
           <Clock color="action" />
           <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-            Updated 2hr ago
+            {wallet.updated_at}
           </Typography>
         </Grid>
         <Grid

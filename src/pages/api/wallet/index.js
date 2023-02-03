@@ -29,6 +29,26 @@ export default async function handler(req, res) {
         return res.status(500).json({ message: "Internal server error" });
       }
 
+    case "GET":
+      // Get all wallets
+      try {
+        const wallets = await prisma.wallet.findMany({
+          where: {
+            user_id: session.user.id,
+          },
+        });
+
+        const count = await prisma.wallet.count({
+          where: {
+            user_id: session.user.id,
+          },
+        });
+
+        return res.status(200).json({ wallets, count });
+      } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+
     default:
       return res.status(405).json({ message: "Method not allowed" });
   }
