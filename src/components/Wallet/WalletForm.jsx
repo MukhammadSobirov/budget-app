@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { colors } from "@/__mocks__/colors";
 import { currencies } from "@/__mocks__/currencies";
 import { useDispatch } from "react-redux";
-import { createWallet } from "@/redux/features/wallets/walletThunk";
+import { createWallet, updateWallet } from "@/redux/features/wallets/walletThunk";
 
 const WalletForm = ({ open, isEdit = false, wallet, handleClose }) => {
   // redux
@@ -29,9 +29,14 @@ const WalletForm = ({ open, isEdit = false, wallet, handleClose }) => {
       description: Yup.string().max(255).notRequired(),
     }),
     onSubmit: async (values) => {
-      dispatch(createWallet(values));
-      handleClose();
-      formik.resetForm();
+      if (isEdit) {
+        dispatch(updateWallet({ ...values, id: wallet.id }));
+        handleClose();
+      } else {
+        dispatch(createWallet(values));
+        handleClose();
+        formik.resetForm();
+      }
     },
   });
 

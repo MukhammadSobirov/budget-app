@@ -15,3 +15,14 @@ export const fetchWallets = createAsyncThunk("wallet/fetchWallets", async () => 
   const response = await fetch("/api/wallet");
   return await response.json();
 });
+
+export const updateWallet = createAsyncThunk("wallet/updateWallet", async (payload) => {
+  const response = await fetch("/api/wallet", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  return await response.json();
+});

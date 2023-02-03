@@ -49,6 +49,27 @@ export default async function handler(req, res) {
         return res.status(500).json({ message: "Internal server error" });
       }
 
+    case "PATCH":
+      // Update a wallet
+      const { id, ...other } = req.body;
+
+      if (!id) return res.status(400).json({ message: "Missing wallet id" });
+
+      try {
+        const updatedWallet = await prisma.wallet.update({
+          where: {
+            id: id,
+          },
+          data: {
+            ...other,
+          },
+        });
+
+        return res.status(200).json({ wallet: updatedWallet });
+      } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+
     default:
       return res.status(405).json({ message: "Method not allowed" });
   }
