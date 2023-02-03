@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { Stack } from "@mui/system";
 import More from "@mui/icons-material/MoreVert";
 import { useState } from "react";
+import WalletForm from "./WalletForm";
 
 const ITEM_HEIGHT = 48;
 
@@ -21,6 +22,11 @@ const WalletCard = ({ wallet, ...rest }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // Generic modal
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
     <Card
@@ -58,7 +64,7 @@ const WalletCard = ({ wallet, ...rest }) => {
               },
             }}
           >
-            <MenuItem>
+            <MenuItem onClick={handleOpenModal}>
               <Typography>Edit</Typography>
             </MenuItem>
             <MenuItem>
@@ -112,6 +118,7 @@ const WalletCard = ({ wallet, ...rest }) => {
           </Grid>
         </Grid>
       </Box>
+      <WalletForm open={openModal} handleClose={handleCloseModal} isEdit={true} wallet={wallet} />
     </Card>
   );
 };
