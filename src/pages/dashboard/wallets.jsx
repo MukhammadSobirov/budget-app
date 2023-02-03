@@ -45,7 +45,7 @@ const Page = () => {
               pt: 3,
             }}
           >
-            {count > 4 && <Pagination color="primary" count={3} size="small" />}
+            {count > 6 && <Pagination color="primary" count={3} size="small" />}
           </Box>
         </Container>
       </Box>
