@@ -26,3 +26,10 @@ export const updateWallet = createAsyncThunk("wallet/updateWallet", async (paylo
   });
   return await response.json();
 });
+
+export const deleteWallet = createAsyncThunk("wallet/deleteWallet", async (id) => {
+  const response = await fetch(`/api/wallet/${id}`, {
+    method: "DELETE",
+  });
+  return await response.json();
+});

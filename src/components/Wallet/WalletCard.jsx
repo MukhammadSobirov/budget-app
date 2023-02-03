@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, Divider, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Divider, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import Clock from "@mui/icons-material/QueryBuilder";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import { Wallet } from "@mui/icons-material";
@@ -8,6 +8,9 @@ import { Stack } from "@mui/system";
 import More from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import WalletForm from "./WalletForm";
+import { deleteWallet } from "@/redux/features/wallets/walletThunk";
+import { useDispatch } from "react-redux";
+import GenericModal from "../GenericModal";
 
 const ITEM_HEIGHT = 48;
 
@@ -27,6 +30,17 @@ const WalletCard = ({ wallet, ...rest }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+
+  // delete wallet modal state
+  const dispatch = useDispatch();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+
+  const handleDelete = () => {
+    dispatch(deleteWallet(wallet.id));
+    handleCloseDeleteModal();
+  };
 
   return (
     <Card
@@ -67,7 +81,7 @@ const WalletCard = ({ wallet, ...rest }) => {
             <MenuItem onClick={handleOpenModal}>
               <Typography>Edit</Typography>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={handleOpenDeleteModal}>
               <Typography>Delete</Typography>
             </MenuItem>
           </Menu>
@@ -119,6 +133,24 @@ const WalletCard = ({ wallet, ...rest }) => {
         </Grid>
       </Box>
       <WalletForm open={openModal} handleClose={handleCloseModal} isEdit={true} wallet={wallet} />
+
+      {/* delete modal */}
+      <GenericModal open={openDeleteModal} handleClose={handleClose}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          Are you sure you want to delete this wallet?
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          This action cannot be undone.
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: "20px" }}>
+          <Button onClick={handleCloseDeleteModal} variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} variant="contained">
+            Delete
+          </Button>
+        </Box>
+      </GenericModal>
     </Card>
   );
 };

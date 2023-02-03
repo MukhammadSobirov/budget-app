@@ -1,6 +1,6 @@
 const { createSlice } = require("@reduxjs/toolkit");
 import { toast } from "react-toastify";
-import { createWallet, fetchWallets, updateWallet } from "./walletThunk";
+import { createWallet, deleteWallet, fetchWallets, updateWallet } from "./walletThunk";
 
 const initState = {
   wallets: [],
@@ -62,6 +62,22 @@ const walletSlice = createSlice({
       .addCase(updateWallet.rejected, (state) => {
         state.status = "failed";
         toast.error("Failed to update wallet");
+      });
+
+    // delete wallet cases
+    builder
+      .addCase(deleteWallet.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteWallet.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.wallets = state.wallets.filter((wallet) => wallet.id !== action.payload.wallet.id);
+        state.count = state.count - 1;
+        toast.success("Wallet deleted successfully");
+      })
+      .addCase(deleteWallet.rejected, (state) => {
+        state.status = "failed";
+        toast.error("Failed to delete wallet");
       });
   },
 });
