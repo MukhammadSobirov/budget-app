@@ -12,10 +12,14 @@ export default async function handler(req, res) {
     case "DELETE":
       // Delete a category
       try {
+        const foundCategory = await prisma.category.findUnique({
+          where: { id: req.query.id },
+        });
+
+        if (foundCategory.built_in) return res.status(400).json({ message: "Cannot delete built-in category" });
+
         const deletedCategory = await prisma.category.delete({
-          where: {
-            id: req.query.id,
-          },
+          where: { AND: [{ user_id: session.user.id }, { id: req.query.id }] },
         });
 
         return res.status(200).json({ category: deletedCategory });

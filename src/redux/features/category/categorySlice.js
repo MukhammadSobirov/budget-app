@@ -52,7 +52,7 @@ const categorySlice = createSlice({
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.status = "idle";
         state.categories = state.categories.map((category) => {
-          if (category.id === action.payload.category.id) {
+          if (category.id === action.payload?.category?.id) {
             return (category = action.payload.category);
           }
           return category;
@@ -70,8 +70,8 @@ const categorySlice = createSlice({
         state.status = "loading";
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.categories = state.categories.filter((category) => category.id !== action.payload.id);
+        state.status = "success";
+        state.categories = state.categories.filter((category) => category.id !== action.payload?.category?.id);
         state.count = state.count - 1;
         toast.success("Category deleted successfully");
       })

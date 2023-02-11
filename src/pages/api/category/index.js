@@ -52,9 +52,16 @@ export default async function handler(req, res) {
       if (!id) return res.status(400).json({ message: "Missing category id" });
 
       try {
+        const foundCategory = await prisma.category.findUnique({
+          where: { id: id },
+        });
+
+        if (foundCategory.built_in) return res.status(400).json({ message: "Cannot update built-in category" });
+
         const updatedCategory = await prisma.category.update({
           where: {
             id: id,
+            user_id: session.user.id,
           },
           data: {
             ...other,
