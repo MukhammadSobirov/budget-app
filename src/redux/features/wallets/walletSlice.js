@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { createWallet, deleteWallet, fetchWallets, updateWallet } from "./walletThunk";
 
