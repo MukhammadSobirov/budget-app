@@ -39,6 +39,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/node": "18.13.0",
     "prisma": "^4.9.0"
   }
 }

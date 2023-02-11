@@ -15,6 +15,11 @@ enum Role {
   USER
 }
 
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   email      String   @unique
@@ -38,4 +43,13 @@ model Wallet {
   currency    String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+}
+
+model Category {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  color      String
+  type       CategoryType
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
 }
