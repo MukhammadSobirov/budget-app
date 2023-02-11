@@ -52,8 +52,8 @@ model Category {
   color      String
   type       CategoryType
   built_in   Boolean      @default(false)
-  user_id    String       @map("user_id") @db.ObjectId
-  user       User         @relation(fields: [user_id], references: [id])
+  user_id    String?      @map("user_id") @db.ObjectId
+  user       User?        @relation(fields: [user_id], references: [id])
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
 }
