@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     case "GET":
       // Get all category
       try {
-        const category = await prisma.category.findMany({
+        const categories = await prisma.category.findMany({
           where: {
             user_id: session.user.id,
           },
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
           },
         });
 
-        return res.status(200).json({ category, count });
+        return res.status(200).json({ categories, count });
       } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
       }

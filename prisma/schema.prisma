@@ -21,15 +21,16 @@ enum CategoryType {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  email      String   @unique
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  email      String     @unique
   name       String
   surname    String
   password   String
-  role       Role     @default(USER)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  role       Role       @default(USER)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   Wallet     Wallet[]
+  Category   Category[]
 }
 
 model Wallet {
@@ -50,6 +51,9 @@ model Category {
   name       String
   color      String
   type       CategoryType
+  built_in   Boolean      @default(false)
+  user_id    String       @map("user_id") @db.ObjectId
+  user       User         @relation(fields: [user_id], references: [id])
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
 }
