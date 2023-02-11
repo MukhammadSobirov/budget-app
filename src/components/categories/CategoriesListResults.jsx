@@ -107,12 +107,9 @@ const CategoriesListResults = ({ categories, ...rest }) => {
                   </TableCell>
                   <TableCell>
                     <SeverityPill
-                      color={
-                        (category.category_type === "expense" && "error") ||
-                        (category.category_type === "income" && "success")
-                      }
+                      color={(category.type === "EXPENSE" && "error") || (category.type === "INCOME" && "success")}
                     >
-                      {category.category_type}
+                      {category.type}
                     </SeverityPill>
                   </TableCell>
                   <TableCell>

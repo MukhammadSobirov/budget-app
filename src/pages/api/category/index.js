@@ -33,15 +33,11 @@ export default async function handler(req, res) {
       // Get all category
       try {
         const categories = await prisma.category.findMany({
-          where: {
-            user_id: session.user.id,
-          },
+          where: { OR: [{ user_id: session.user.id }, { built_in: true }] },
         });
 
         const count = await prisma.category.count({
-          where: {
-            user_id: session.user.id,
-          },
+          where: { OR: [{ user_id: session.user.id }, { built_in: true }] },
         });
 
         return res.status(200).json({ categories, count });
