@@ -30,10 +30,16 @@ export default async function handler(req, res) {
       }
 
     case "GET":
+      const { page, size } = req.query;
       // Get all category
       try {
         const categories = await prisma.category.findMany({
           where: { OR: [{ user_id: session.user.id }, { built_in: true }] },
+          skip: +page * +size,
+          take: +size,
+          orderBy: {
+            created_at: "desc",
+          },
         });
 
         const count = await prisma.category.count({

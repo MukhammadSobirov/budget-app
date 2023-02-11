@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchCategories = createAsyncThunk("category/fetchCategories", async () => {
-  const response = await fetch("/api/category");
+export const fetchCategories = createAsyncThunk("category/fetchCategories", async (query) => {
+  const response = await fetch(`/api/category?page=${query.page}&size=${query.size}`);
   return await response.json();
 });
 
 export const createCategory = createAsyncThunk("category/createCategory", async (payload) => {
-  const response = await fetch("/api/category", {
+  const response = await fetch(`/api/category`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
   Card,
-  Checkbox,
   IconButton,
   Menu,
   MenuItem,
@@ -19,49 +17,23 @@ import {
 } from "@mui/material";
 import { SeverityPill } from "../SeverityPill";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useDispatch } from "react-redux";
-import { deleteCategory } from "@/redux/features/category/categoryThunks";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCategory, fetchCategories } from "@/redux/features/category/categoryThunks";
 import CategoryForm from "./CategoryForm";
 import GenericModal from "../GenericModal";
 
 const ITEM_HEIGHT = 48;
 
-const CategoriesListResults = ({ categories, ...rest }) => {
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+const CategoriesListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
-  const handleSelectAll = (event) => {
-    let newSelectedCategoryIds;
+  const dispatch = useDispatch();
+  const { categories, count } = useSelector((state) => state.category);
 
-    if (event.target.checked) {
-      newSelectedCategoryIds = categories.map((category) => category.id);
-    } else {
-      newSelectedCategoryIds = [];
-    }
-
-    setSelectedCategoryIds(newSelectedCategoryIds);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCategoryIds.indexOf(id);
-    let newSelectedCategoryIds = [];
-
-    if (selectedIndex === -1) {
-      newSelectedCategoryIds = newSelectedCategoryIds.concat(selectedCategoryIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedCategoryIds = newSelectedCategoryIds.concat(selectedCategoryIds.slice(1));
-    } else if (selectedIndex === selectedCategoryIds.length - 1) {
-      newSelectedCategoryIds = newSelectedCategoryIds.concat(selectedCategoryIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedCategoryIds = newSelectedCategoryIds.concat(
-        selectedCategoryIds.slice(0, selectedIndex),
-        selectedCategoryIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedCategoryIds(newSelectedCategoryIds);
-  };
+  useEffect(() => {
+    dispatch(fetchCategories({ size: limit, page: page }));
+  }, [dispatch, limit, page]);
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -78,14 +50,6 @@ const CategoriesListResults = ({ categories, ...rest }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCategoryIds.length === categories.length}
-                    color="primary"
-                    indeterminate={selectedCategoryIds.length > 0 && selectedCategoryIds.length < categories.length}
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Type</TableCell>
                 <TableCell>Color</TableCell>
@@ -93,13 +57,8 @@ const CategoriesListResults = ({ categories, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories.slice(0, limit).map((category) => (
-                <CategoryRowItem
-                  key={category.id}
-                  category={category}
-                  selectedCategoryIds={selectedCategoryIds}
-                  handleSelectOne={handleSelectOne}
-                />
+              {categories.map((category) => (
+                <CategoryRowItem key={category.id} category={category} />
               ))}
             </TableBody>
           </Table>
@@ -107,7 +66,7 @@ const CategoriesListResults = ({ categories, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={categories.length}
+        count={count}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -118,7 +77,7 @@ const CategoriesListResults = ({ categories, ...rest }) => {
   );
 };
 
-function CategoryRowItem({ category, selectedCategoryIds, handleSelectOne }) {
+function CategoryRowItem({ category }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -147,14 +106,7 @@ function CategoryRowItem({ category, selectedCategoryIds, handleSelectOne }) {
   };
 
   return (
-    <TableRow hover key={category.id} selected={selectedCategoryIds.indexOf(category.id) !== -1}>
-      <TableCell padding="checkbox">
-        <Checkbox
-          checked={selectedCategoryIds.indexOf(category.id) !== -1}
-          onChange={(event) => handleSelectOne(event, category.id)}
-          value="true"
-        />
-      </TableCell>
+    <TableRow hover key={category.id}>
       <TableCell>
         <Box
           sx={{
@@ -194,7 +146,7 @@ function CategoryRowItem({ category, selectedCategoryIds, handleSelectOne }) {
         </Box>
       </TableCell>
       <TableCell>
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} disabled={category.built_in}>
           <MoreVertIcon />
         </IconButton>
         <Menu
@@ -240,9 +192,5 @@ function CategoryRowItem({ category, selectedCategoryIds, handleSelectOne }) {
     </TableRow>
   );
 }
-
-CategoriesListResults.propTypes = {
-  categories: PropTypes.array.isRequired,
-};
 
 export default CategoriesListResults;
