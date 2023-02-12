@@ -31,7 +31,7 @@ export const updateCategory = createAsyncThunk("category/updateCategory", async 
 export const deleteCategory = createAsyncThunk("category/deleteCategory", async (id, { rejectWithValue }) => {
   try {
     const response = await axios.delete(`/api/category/${id}`);
-    return response.date;
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }

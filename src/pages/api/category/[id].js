@@ -18,6 +18,10 @@ export default async function handler(req, res) {
 
         if (foundCategory.built_in) return res.status(400).json({ message: "Cannot delete built-in category" });
 
+        if (foundCategory.user_id !== session.user.id) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+
         const transactions = await prisma.transaction.count({
           where: { category_id: req.query.id },
         });
@@ -25,7 +29,7 @@ export default async function handler(req, res) {
         if (transactions > 0) return res.status(400).json({ message: "Cannot delete category with transactions" });
 
         const deletedCategory = await prisma.category.delete({
-          where: { AND: [{ user_id: session.user.id }, { id: req.query.id }] },
+          where: { id: req.query.id },
         });
 
         return res.status(200).json({ category: deletedCategory });
