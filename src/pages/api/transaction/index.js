@@ -20,6 +20,20 @@ export default async function handler(req, res) {
                 id: session.user.id,
               },
             },
+            category: {
+              connect: {
+                id: req.body.category,
+              },
+            },
+            wallet: {
+              connect: {
+                id: req.body.wallet,
+              },
+            },
+          },
+          include: {
+            category: true,
+            wallet: true,
           },
         });
 
@@ -38,6 +52,10 @@ export default async function handler(req, res) {
           take: +size,
           orderBy: {
             created_at: "desc",
+          },
+          include: {
+            category: true,
+            wallet: true,
           },
         });
 
@@ -68,10 +86,15 @@ export default async function handler(req, res) {
         const updatedTransaction = await prisma.transaction.update({
           where: { id: id },
           data: other,
+          include: {
+            category: true,
+            wallet: true,
+          },
         });
 
         return res.status(200).json({ transaction: updatedTransaction });
       } catch (error) {
+        console.log(error);
         return res.status(500).json({ message: "Internal server error" });
       }
 

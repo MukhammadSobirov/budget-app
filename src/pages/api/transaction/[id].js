@@ -24,7 +24,7 @@ export default async function handler(req, res) {
           where: { id: req.query.id },
         });
 
-        return res.status(200).json({ transaction: deletedTransaction });
+        return res.status(200).json({ id: deletedTransaction.id });
       } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
       }

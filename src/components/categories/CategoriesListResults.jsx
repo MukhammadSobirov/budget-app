@@ -106,7 +106,7 @@ function CategoryRowItem({ category }) {
   };
 
   return (
-    <TableRow hover key={category.id}>
+    <TableRow hover>
       <TableCell>
         <Box
           sx={{

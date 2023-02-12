@@ -19,7 +19,7 @@ const walletSlice = createSlice({
         state.status = "loading";
       })
       .addCase(createWallet.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.wallets = [...state.wallets, action.payload.wallets];
         state.count = state.count + 1;
         toast.success("Wallet created successfully");
@@ -35,7 +35,7 @@ const walletSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchWallets.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.wallets = action.payload.wallets;
         state.count = action.payload.count;
       })
@@ -50,7 +50,7 @@ const walletSlice = createSlice({
         state.status = "loading";
       })
       .addCase(updateWallet.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.wallets = state.wallets.map((wallet) => {
           if (wallet.id === action.payload.wallet.id) {
             return (wallet = action.payload.wallet);
@@ -70,7 +70,7 @@ const walletSlice = createSlice({
         state.status = "loading";
       })
       .addCase(deleteWallet.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.wallets = state.wallets.filter((wallet) => wallet.id !== action.payload.wallet.id);
         state.count = state.count - 1;
         toast.success("Wallet deleted successfully");

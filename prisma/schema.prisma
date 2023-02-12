@@ -71,8 +71,7 @@ model Transaction {
   user        User     @relation(fields: [user_id], references: [id])
   amount      Float
   description String?
-  date        DateTime
-  string_date String
+  date        String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 }

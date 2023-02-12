@@ -19,7 +19,7 @@ const categorySlice = createSlice({
         state.status = "loading";
       })
       .addCase(createCategory.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.categories = [...state.categories, action.payload.category];
         state.count = state.count + 1;
         toast.success("Category created successfully");
@@ -35,7 +35,7 @@ const categorySlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.categories = action.payload.categories;
         state.count = action.payload.count;
       })
@@ -50,7 +50,7 @@ const categorySlice = createSlice({
         state.status = "loading";
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.categories = state.categories.map((category) => {
           if (category.id === action.payload?.category?.id) {
             return (category = action.payload.category);

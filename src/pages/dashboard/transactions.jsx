@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { transactions } from "@/__mocks__/transactions";
 import TransactionsListResults from "@/components/transactions/transactionsListResults";
 import TransactionListToolbar from "@/components/transactions/TransactionListToolbar";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
@@ -20,7 +19,7 @@ const Page = () => (
       <Container maxWidth={false}>
         <TransactionListToolbar />
         <Box sx={{ mt: 3 }}>
-          <TransactionsListResults transactions={transactions} />
+          <TransactionsListResults />
         </Box>
       </Container>
     </Box>
