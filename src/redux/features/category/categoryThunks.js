@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const fetchCategories = createAsyncThunk("category/fetchCategories", async (query) => {
   const response = await fetch(`/api/category?page=${query.page}&size=${query.size}`);
@@ -27,9 +28,11 @@ export const updateCategory = createAsyncThunk("category/updateCategory", async 
   return await response.json();
 });
 
-export const deleteCategory = createAsyncThunk("category/deleteCategory", async (id) => {
-  const response = await fetch(`/api/category/${id}`, {
-    method: "DELETE",
-  });
-  return await response.json();
+export const deleteCategory = createAsyncThunk("category/deleteCategory", async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.delete(`/api/category/${id}`);
+    return response.date;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });

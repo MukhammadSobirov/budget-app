@@ -75,9 +75,9 @@ const categorySlice = createSlice({
         state.count = state.count - 1;
         toast.success("Category deleted successfully");
       })
-      .addCase(deleteCategory.rejected, (state) => {
+      .addCase(deleteCategory.rejected, (state, action) => {
         state.status = "failed";
-        toast.error("Failed to delete category");
+        toast.error(action.payload.message || "Failed to delete category");
       });
   },
 });
