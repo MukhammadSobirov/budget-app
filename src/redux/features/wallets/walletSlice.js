@@ -75,9 +75,9 @@ const walletSlice = createSlice({
         state.count = state.count - 1;
         toast.success("Wallet deleted successfully");
       })
-      .addCase(deleteWallet.rejected, (state) => {
+      .addCase(deleteWallet.rejected, (state, action) => {
         state.status = "failed";
-        toast.error("Failed to delete wallet");
+        toast.error(action.payload.message || "Failed to delete wallet");
       });
   },
 });

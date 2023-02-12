@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const createWallet = createAsyncThunk("wallet/createWallet", async (payload) => {
   const response = await fetch("/api/wallet", {
@@ -27,9 +28,11 @@ export const updateWallet = createAsyncThunk("wallet/updateWallet", async (paylo
   return await response.json();
 });
 
-export const deleteWallet = createAsyncThunk("wallet/deleteWallet", async (id) => {
-  const response = await fetch(`/api/wallet/${id}`, {
-    method: "DELETE",
-  });
-  return await response.json();
+export const deleteWallet = createAsyncThunk("wallet/deleteWallet", async (id, { rejectWithValue }) => {
+  try {
+    const response = await axios.delete(`/api/wallet/${id}`);
+    return await response.json();
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
