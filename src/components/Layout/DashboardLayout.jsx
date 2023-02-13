@@ -18,11 +18,14 @@ import ListItemText from "@mui/material/ListItemText";
 import { Logout } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { AccountPopover } from "../AccountPopover";
-import { Avatar, LinearProgress, Link } from "@mui/material";
+import { Avatar, LinearProgress, Link, MenuItem, Select } from "@mui/material";
 import { dashboardRoutes } from "@/routes/dahsboard-routes";
 import NextLink from "next/link";
 import router from "next/router";
 import { useSession, signOut } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchWallets } from "@/redux/features/wallets/walletThunk";
+import { setCurrentWallet } from "@/redux/features/wallets/walletSlice";
 
 const drawerWidth = 240;
 
@@ -93,6 +96,9 @@ export default function DashboardLayout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const wallets = useSelector((state) => state.wallet);
+
   const settingsRef = React.useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = React.useState(false);
 
@@ -112,6 +118,12 @@ export default function DashboardLayout({ children }) {
     },
   });
 
+  React.useEffect(() => {
+    if (wallets.status === "idle") {
+      dispatch(fetchWallets());
+    }
+  }, [wallets.status, dispatch]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -129,7 +141,18 @@ export default function DashboardLayout({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Stack direction="row" width={"100%"} justifyContent="flex-end">
+          <Stack direction="row" width={"100%"} gap="30px" justifyContent="flex-end" alignItems={"center"}>
+            <Select
+              sx={{ backgroundColor: "white", width: "200px", height: "40px" }}
+              value={wallets.currentWallet.id}
+              onChange={(e) => dispatch(setCurrentWallet(e.target.value))}
+            >
+              {wallets?.wallets?.map((wallet) => (
+                <MenuItem key={wallet.id} value={wallet.id}>
+                  {wallet.name}
+                </MenuItem>
+              ))}
+            </Select>
             <Avatar
               onClick={() => setOpenAccountPopover(true)}
               ref={settingsRef}

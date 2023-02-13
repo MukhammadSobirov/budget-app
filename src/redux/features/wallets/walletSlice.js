@@ -4,6 +4,18 @@ import { createWallet, deleteWallet, fetchWallets, updateWallet } from "./wallet
 
 const initState = {
   wallets: [],
+  currentWallet: {
+    id: "",
+    name: "",
+    balance: 0,
+    currency: "",
+    color: "",
+    is_primary: false,
+    transactions: [],
+    description: "",
+    created_at: "",
+    updated_at: "",
+  },
   count: 0,
   status: "idle",
 };
@@ -11,7 +23,11 @@ const initState = {
 const walletSlice = createSlice({
   name: "wallet",
   initialState: initState,
-  reducers: {},
+  reducers: {
+    setCurrentWallet(state, action) {
+      state.currentWallet = state.wallets.find((wallet) => wallet.id === action.payload);
+    },
+  },
   extraReducers(builder) {
     // create wallet cases
     builder
@@ -38,6 +54,8 @@ const walletSlice = createSlice({
         state.status = "success";
         state.wallets = action.payload.wallets;
         state.count = action.payload.count;
+        state.currentWallet =
+          action.payload.wallets.find((wallet) => wallet.is_primary === true) || action.payload.wallets[0];
       })
       .addCase(fetchWallets.rejected, (state) => {
         state.status = "failed";
@@ -82,4 +100,5 @@ const walletSlice = createSlice({
   },
 });
 
+export const { setCurrentWallet } = walletSlice.actions;
 export default walletSlice.reducer;

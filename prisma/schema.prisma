@@ -43,6 +43,7 @@ model Wallet {
   name        String
   color       String
   currency    String
+  is_primary  Boolean       @default(false)
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
   Transaction Transaction[]
