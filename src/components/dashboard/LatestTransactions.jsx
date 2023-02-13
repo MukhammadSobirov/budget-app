@@ -1,121 +1,67 @@
-import { format } from "date-fns";
-import { v4 as uuid } from "uuid";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import {
-  Box,
-  Button,
-  Card,
-  CardHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-  Tooltip,
-} from "@mui/material";
+import { Box, Button, Card, CardHeader, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { SeverityPill } from "../SeverityPill";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "@/redux/features/transaction/transactionThunks";
+import { useEffect } from "react";
+import Link from "next/link";
 
-const transactions = [
-  {
-    id: uuid(),
-    category: "Rent",
-    amount: 30.5,
-    createdAt: 1555016400000,
-    transaction_type: "income",
-  },
-  {
-    id: uuid(),
-    category: "Food",
-    amount: 25.1,
-    createdAt: 1555016400000,
-    transaction_type: "expense",
-  },
-  {
-    id: uuid(),
-    category: "Food",
-    amount: 10.99,
-    createdAt: 1554930000000,
-    transaction_type: "income",
-  },
-  {
-    id: uuid(),
-    category: "Salary",
-    amount: 96.43,
-    createdAt: 1554757200000,
-    transaction_type: "income",
-  },
-  {
-    id: uuid(),
-    category: "Bonus",
-    amount: 32.54,
-    createdAt: 1554670800000,
-    transaction_type: "expense",
-  },
-  {
-    id: uuid(),
-    category: "Lottery",
-    amount: 16.76,
-    createdAt: 1554670800000,
-    transaction_type: "expense",
-  },
-];
+const LatestTransactions = (props) => {
+  const dispatch = useDispatch();
+  const { transactions } = useSelector((state) => state.transaction);
 
-const LatestTransactions = (props) => (
-  <Card {...props}>
-    <CardHeader title="Latest Transactions" />
-    <PerfectScrollbar>
-      <Box sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Category</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell sortDirection="desc">
-                <Tooltip enterDelay={300} title="Sort">
-                  <TableSortLabel active direction="desc">
-                    Date
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-              <TableCell>Type</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {transactions.map((order) => (
-              <TableRow hover key={order.id}>
-                <TableCell>{order.category}</TableCell>
-                <TableCell>${order.amount}</TableCell>
-                <TableCell>{format(order.createdAt, "dd/MM/yyyy")}</TableCell>
-                <TableCell>
-                  <SeverityPill
-                    color={
-                      (order.transaction_type === "expense" && "error") ||
-                      (order.transaction_type === "income" && "success")
-                    }
-                  >
-                    {order.transaction_type}
-                  </SeverityPill>
-                </TableCell>
+  useEffect(() => {
+    dispatch(fetchTransactions({ size: 10, page: 0 }));
+  }, [dispatch]);
+
+  return (
+    <Card {...props}>
+      <CardHeader title="Latest Transactions" />
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 800 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Wallet</TableCell>
+
+                <TableCell>Category</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell>Type</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {transactions.map((t) => (
+                <TableRow hover key={t.id}>
+                  <TableCell>{t.wallet.name}</TableCell>
+                  <TableCell>{t.category.name}</TableCell>
+                  <TableCell>${t.amount}</TableCell>
+                  <TableCell>{t.date}</TableCell>
+                  <TableCell>
+                    <SeverityPill color={t.category.type === "EXPENSE" ? "error" : "success"}>
+                      {t.category.type}
+                    </SeverityPill>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          p: 2,
+        }}
+      >
+        <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small" variant="text">
+          <Link href="/dashboard/transactions">View all</Link>
+        </Button>
       </Box>
-    </PerfectScrollbar>
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "flex-end",
-        p: 2,
-      }}
-    >
-      <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small" variant="text">
-        View all
-      </Button>
-    </Box>
-  </Card>
-);
+    </Card>
+  );
+};
 
 export default LatestTransactions;
