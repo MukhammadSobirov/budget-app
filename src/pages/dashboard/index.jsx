@@ -8,8 +8,20 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PieChart from "@/components/dashboard/PieChart";
 import LatestTransactions from "@/components/dashboard/LatestTransactions";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStats, selectAllStats } from "@/redux/features/stats/statsSlice";
 
 function Page() {
+  const dispatch = useDispatch();
+  const stats = useSelector(selectAllStats);
+
+  useEffect(() => {
+    if (stats.status === "idle") {
+      dispatch(fetchStats());
+    }
+  }, [dispatch, stats.status]);
+
   return (
     <>
       <Head>
