@@ -9,27 +9,27 @@ const SalesGraph = (props) => {
   const data = {
     datasets: [
       {
-        backgroundColor: "#3F51B5",
+        backgroundColor: "#e6675e",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: "This year",
+        data: props.expense,
+        label: "Expense",
         maxBarThickness: 10,
       },
       {
-        backgroundColor: "#EEEEEE",
+        backgroundColor: "#4CAF50",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: "Last year",
+        data: props.income,
+        label: "Income",
         maxBarThickness: 10,
       },
     ],
-    labels: ["1 Aug", "2 Aug", "3 Aug", "4 Aug", "5 Aug", "6 Aug", "7 aug"],
+    labels: props.labels,
   };
 
   const options = {

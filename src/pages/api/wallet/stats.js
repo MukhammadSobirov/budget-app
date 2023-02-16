@@ -11,14 +11,6 @@ export default async function handler(req, res) {
 
   switch (req.method) {
     case "GET":
-      // step 1: get all wallets for the user
-      // step 2: group user transactions by category
-      // step 3: get the balance for each wallet
-      // step 4: get total expense for each wallet
-      // step 5: get total income for each wallet
-      // step 6: get average expense for each wallet
-      // step 7: get average income for each wallet
-
       const wallets = await prisma.wallet.findMany({
         where: {
           user_id: session.user.id,
@@ -51,6 +43,25 @@ export default async function handler(req, res) {
 
         const averageExpense = totalExpense / expenses.length;
 
+        const pieChartData = {
+          labels: [],
+          expenses: [],
+          incomes: [],
+        };
+
+        const expenseDates = expenses.map((e) => e.date);
+        const incomeDates = income.map((e) => e.date);
+
+        const dates = [...new Set([...expenseDates, ...incomeDates])].sort();
+
+        dates.forEach((date) => {
+          pieChartData.labels.push(date);
+          pieChartData.expenses.push(
+            expenses.filter((e) => e.date === date).reduce((acc, curr) => acc + curr.amount, 0)
+          );
+          pieChartData.incomes.push(income.filter((e) => e.date === date).reduce((acc, curr) => acc + curr.amount, 0));
+        });
+
         return {
           id: wallet.id,
           name: wallet.name,
@@ -60,6 +71,7 @@ export default async function handler(req, res) {
           totalIncome: Math.round(totalIncome * 100) / 100,
           averageExpense: Math.round(averageExpense * 100) / 100,
           savingsRate: Math.round(((totalIncome - totalExpense) / totalIncome) * 100) / 100,
+          pieChartData,
         };
       });
 
