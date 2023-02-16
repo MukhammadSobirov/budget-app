@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import TransactionsListResults from "@/components/transactions/transactionsListResults";
-import TransactionListToolbar from "@/components/transactions/TransactionListToolbar";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
+import TransactionListToolbar from "src/components/transactions/TransactionListToolbar";
+import TransactionsListResults from "src/components/transactions/TransactionsListResults";
+import DashboardLayout from "src/components/Layout/DashboardLayout";
 
 const Page = () => (
   <>

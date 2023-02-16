@@ -1,16 +1,15 @@
 import { Container, Grid } from "@mui/material";
 import { Balance, Percent } from "@mui/icons-material";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import StatWidget from "@/components/dashboard/StatWidget";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import SalesGraph from "@/components/dashboard/SalesGraph";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-import PieChart from "@/components/dashboard/PieChart";
-import LatestTransactions from "@/components/dashboard/LatestTransactions";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStats, selectAllStats } from "@/redux/features/stats/statsSlice";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import StatWidget from "src/components/dashboard/StatWidget";
+import SalesGraph from "src/components/dashboard/SalesGraph";
+import PieChart from "src/components/dashboard/PieChart";
+import LatestTransactions from "src/components/dashboard/LatestTransactions";
+import DashboardLayout from "src/components/Layout/DashboardLayout";
 
 function Page() {
   const dispatch = useDispatch();

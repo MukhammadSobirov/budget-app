@@ -17,10 +17,10 @@ import {
 } from "@mui/material";
 import { SeverityPill } from "../SeverityPill";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTransaction, fetchTransactions } from "@/redux/features/transaction/transactionThunks";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import TransactionForm from "./TransactionForm";
 import GenericModal from "../GenericModal";
+import { deleteTransaction, fetchTransactions } from "src/redux/features/transaction/transactionThunks";
 
 const ITEM_HEIGHT = 48;
 

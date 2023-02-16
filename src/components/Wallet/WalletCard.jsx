@@ -7,9 +7,9 @@ import { Stack } from "@mui/system";
 import More from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import WalletForm from "./WalletForm";
-import { deleteWallet } from "@/redux/features/wallets/walletThunk";
 import { useDispatch } from "react-redux";
 import GenericModal from "../GenericModal";
+import { deleteWallet } from "src/redux/features/wallets/walletThunk";
 
 const ITEM_HEIGHT = 48;
 

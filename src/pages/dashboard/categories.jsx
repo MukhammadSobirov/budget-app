@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-import CategoryListToolbar from "@/components/categories/CategoryListToolbar";
-import CategoriesListResults from "@/components/categories/CategoriesListResults";
+import CategoryListToolbar from "src/components/categories/CategoryListToolbar";
+import CategoriesListResults from "src/components/categories/CategoriesListResults";
+import DashboardLayout from "src/components/Layout/DashboardLayout";
 
 const Page = () => {
   return (

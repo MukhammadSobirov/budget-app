@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Stack } from "@mui/system";
 import { useDispatch } from "react-redux";
 import GenericModal from "../GenericModal";
-import { createCategory, updateCategory } from "@/redux/features/category/categoryThunks";
+import { createCategory, updateCategory } from "src/redux/features/category/categoryThunks";
 
 const CategoryForm = ({ open, isEdit = false, category, handleClose }) => {
   // redux

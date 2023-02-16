@@ -3,10 +3,13 @@ import { Stack } from "@mui/system";
 import GenericModal from "../GenericModal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { colors } from "@/__mocks__/colors";
-import { currencies } from "@/__mocks__/currencies";
 import { useDispatch } from "react-redux";
-import { createWallet, updateWallet } from "@/redux/features/wallets/walletThunk";
+import { createWallet, updateWallet } from "src/redux/features/wallets/walletThunk";
+import { colors } from "src/__mocks__/colors";
+import { currencies } from "src/__mocks__/currencies";
+// import { colors } from "@/__mocks__/colors";
+// import { currencies } from "@/__mocks__/currencies";
+// import { createWallet, updateWallet } from "@/redux/features/wallets/walletThunk";
 
 const WalletForm = ({ open, isEdit = false, wallet, handleClose }) => {
   // redux

@@ -18,9 +18,9 @@ import {
 import { SeverityPill } from "../SeverityPill";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCategory, fetchCategories } from "@/redux/features/category/categoryThunks";
 import CategoryForm from "./CategoryForm";
 import GenericModal from "../GenericModal";
+import { deleteCategory, fetchCategories } from "src/redux/features/category/categoryThunks";
 
 const ITEM_HEIGHT = 48;
 

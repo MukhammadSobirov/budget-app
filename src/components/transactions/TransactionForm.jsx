@@ -6,9 +6,9 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import GenericModal from "../GenericModal";
 import { useEffect } from "react";
-import { fetchCategories } from "@/redux/features/category/categoryThunks";
-import { fetchWallets } from "@/redux/features/wallets/walletThunk";
 import { SeverityPill } from "../SeverityPill";
+import { fetchCategories } from "src/redux/features/category/categoryThunks";
+import { fetchWallets } from "src/redux/features/wallets/walletThunk";
 
 const TransactionForm = ({ open, isEdit = false, transaction, handleClose }) => {
   // redux

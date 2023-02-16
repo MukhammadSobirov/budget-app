@@ -19,13 +19,13 @@ import { Logout } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { AccountPopover } from "../AccountPopover";
 import { Avatar, LinearProgress, Link, MenuItem, Select } from "@mui/material";
-import { dashboardRoutes } from "@/routes/dahsboard-routes";
 import NextLink from "next/link";
 import router from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWallets } from "@/redux/features/wallets/walletThunk";
-import { setCurrentWallet } from "@/redux/features/wallets/walletSlice";
+import { setCurrentWallet } from "src/redux/features/wallets/walletSlice";
+import { fetchWallets } from "src/redux/features/wallets/walletThunk";
+import { dashboardRoutes } from "src/routes/dahsboard-routes";
 
 const drawerWidth = 240;
 

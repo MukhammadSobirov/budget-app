@@ -3,9 +3,10 @@ import { Box, Button, Card, CardHeader, Table, TableBody, TableCell, TableHead, 
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { SeverityPill } from "../SeverityPill";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTransactions } from "@/redux/features/transaction/transactionThunks";
+
 import { useEffect } from "react";
 import Link from "next/link";
+import { fetchTransactions } from "src/redux/features/transaction/transactionThunks";
 
 const LatestTransactions = (props) => {
   const dispatch = useDispatch();

@@ -1,11 +1,10 @@
 import Head from "next/head";
 import { Box, Container, Grid, Pagination } from "@mui/material";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-import WalletListToolbar from "@/components/Wallet/WalletListToolbar";
-import WalletCard from "@/components/Wallet/WalletCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchWallets } from "@/redux/features/wallets/walletThunk";
+import WalletListToolbar from "src/components/Wallet/WalletListToolbar";
+import WalletCard from "src/components/Wallet/WalletCard";
+import DashboardLayout from "src/components/Layout/DashboardLayout";
 
 const Page = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import DashboardLayout from "@/components/Layout/DashboardLayout";
-import AccountProfile from "@/components/account/AccountProfile";
-import AccountProfileDetails from "@/components/account/AccountProfileDetails";
+import AccountProfile from "src/components/account/AccountProfile";
+import AccountProfileDetails from "src/components/account/AccountProfileDetails";
+import DashboardLayout from "src/components/Layout/DashboardLayout";
 
 const Page = () => (
   <>
