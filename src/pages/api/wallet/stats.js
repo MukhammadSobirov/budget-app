@@ -50,16 +50,16 @@ export default async function handler(req, res) {
         }, 0);
 
         const averageExpense = totalExpense / expenses.length;
-        const averageIncome = totalIncome / income.length;
 
         return {
           id: wallet.id,
           name: wallet.name,
-          balance: Math.round(balance * 100) / 100,
+          currency: wallet.currency,
+          balance: Math.round(balance * 100) / 100, // round to 2 decimal places
           totalExpense: Math.round(totalExpense * 100) / 100,
           totalIncome: Math.round(totalIncome * 100) / 100,
           averageExpense: Math.round(averageExpense * 100) / 100,
-          averageIncome: Math.round(averageIncome * 100) / 100,
+          savingsRate: Math.round(((totalIncome - totalExpense) / totalIncome) * 100) / 100,
         };
       });
 

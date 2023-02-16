@@ -1,5 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import numeral from "numeral";
 
 const StatWidget = ({ title, value, icon, color, currency }) => {
   return (
@@ -21,8 +22,7 @@ const StatWidget = ({ title, value, icon, color, currency }) => {
         </Box>
       </Stack>
       <Typography variant="h5">
-        {currency}
-        {value}
+        {currency} {numeral(value).format("0,0.00")}
       </Typography>
     </Paper>
   );

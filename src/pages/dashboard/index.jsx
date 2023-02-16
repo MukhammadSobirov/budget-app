@@ -8,13 +8,21 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import PieChart from "@/components/dashboard/PieChart";
 import LatestTransactions from "@/components/dashboard/LatestTransactions";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStats, selectAllStats } from "@/redux/features/stats/statsSlice";
 
 function Page() {
   const dispatch = useDispatch();
   const stats = useSelector(selectAllStats);
+  const currentWallet = useSelector((state) => state.wallet.currentWallet);
+  const [currentStats, setCurrentStats] = useState({});
+
+  useEffect(() => {
+    if (currentWallet && stats.wallets) {
+      setCurrentStats(stats.wallets.find((stat) => stat.id === currentWallet.id));
+    }
+  }, [currentWallet, stats]);
 
   useEffect(() => {
     if (stats.status === "idle") {
@@ -32,35 +40,40 @@ function Page() {
           <Grid item xs={12} md={3}>
             <StatWidget
               title={"Balance"}
-              value="100.00"
+              value={currentStats?.balance}
               icon={<Balance sx={{ color: "white" }} />}
               color="teal"
-              currency="$"
+              currency={currentStats?.currency}
             />
           </Grid>
 
           <Grid item xs={12} md={3}>
             <StatWidget
               title={"Expense"}
-              value="123,345.00"
+              value={currentStats?.totalExpense}
               icon={<IndeterminateCheckBoxIcon sx={{ color: "white" }} />}
               color="tomato"
-              currency="$"
+              currency={currentStats?.currency}
             />
           </Grid>
 
           <Grid item xs={12} md={3}>
             <StatWidget
               title={"Income"}
-              value="23,000.00"
+              value={currentStats?.totalIncome}
               icon={<AddBoxIcon sx={{ color: "white" }} />}
               color="green"
-              currency="$"
+              currency={currentStats?.currency}
             />
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <StatWidget title={"Monthly Change"} value="+23%" icon={<Percent sx={{ color: "white" }} />} color="blue" />
+            <StatWidget
+              title={"Savings Rate"}
+              value={currentStats?.savingsRate}
+              icon={<Percent sx={{ color: "white" }} />}
+              color="blue"
+            />
           </Grid>
         </Grid>
 

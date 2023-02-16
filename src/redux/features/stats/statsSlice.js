@@ -8,7 +8,7 @@ export const fetchStats = createAsyncThunk("stats/fetchStats", async () => {
 });
 
 const initialState = {
-  stats: [],
+  wallets: [],
   status: "idle",
 };
 
@@ -23,7 +23,7 @@ export const statsSlice = createSlice({
       })
       .addCase(fetchStats.fulfilled, (state, action) => {
         state.status = "success";
-        state.stats = action.payload.stats;
+        state.wallets = action.payload.stats;
       })
       .addCase(fetchStats.rejected, (state, action) => {
         state.status = "fail";
