@@ -18,14 +18,12 @@ const WalletForm = ({ open, isEdit = false, wallet, handleClose }) => {
       name: wallet?.name || "",
       color: wallet?.color || "",
       currency: wallet?.currency || "",
-      balance: wallet?.balance || 0,
       description: wallet?.description || "",
     },
     validationSchema: Yup.object({
       name: Yup.string().max(255).required("Name is required"),
       color: Yup.string().max(255).required("Wallet color is required"),
       currency: Yup.string().max(255).required("Currency is required"),
-      balance: Yup.number().notRequired(),
       description: Yup.string().max(255).notRequired(),
     }),
     onSubmit: async (values) => {
@@ -89,17 +87,6 @@ const WalletForm = ({ open, isEdit = false, wallet, handleClose }) => {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            fullWidth
-            label="Balance"
-            margin="normal"
-            name="balance"
-            type={"number"}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.balance}
-            variant="outlined"
-          />
 
           <TextField
             fullWidth

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Box, Button, Card, CardContent, Divider, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import Clock from "@mui/icons-material/QueryBuilder";
-import FunctionsIcon from "@mui/icons-material/Functions";
 import { Wallet } from "@mui/icons-material";
 import { format } from "date-fns";
 import { Stack } from "@mui/system";
@@ -113,7 +112,7 @@ const WalletCard = ({ wallet, ...rest }) => {
           >
             <Clock color="action" />
             <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-              {format(new Date(wallet.updated_at), "dd/MM/yyyy")}
+              {format(new Date(wallet.created_at), "dd/MM/yyyy")}
             </Typography>
           </Grid>
           <Grid
@@ -122,12 +121,7 @@ const WalletCard = ({ wallet, ...rest }) => {
               alignItems: "center",
               display: "flex",
             }}
-          >
-            <FunctionsIcon color="action" />
-            <Typography color="textSecondary" display="inline" sx={{ pl: 1 }} variant="body2">
-              {wallet.balance} {wallet.currency}
-            </Typography>
-          </Grid>
+          ></Grid>
         </Grid>
       </Box>
       <WalletForm open={openModal} handleClose={handleCloseModal} isEdit={true} wallet={wallet} />

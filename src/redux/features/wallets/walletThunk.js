@@ -31,7 +31,7 @@ export const updateWallet = createAsyncThunk("wallet/updateWallet", async (paylo
 export const deleteWallet = createAsyncThunk("wallet/deleteWallet", async (id, { rejectWithValue }) => {
   try {
     const response = await axios.delete(`/api/wallet/${id}`);
-    return await response.json();
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
