@@ -1,10 +1,10 @@
 import { Bar } from "react-chartjs-2";
-import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { Box, Card, CardContent, CardHeader, Divider, MenuItem, Select, useTheme } from "@mui/material";
+import { useState } from "react";
 
 const SalesGraph = (props) => {
   const theme = useTheme();
+  const [limit, setLimit] = useState(10);
 
   const data = {
     datasets: [
@@ -14,7 +14,7 @@ const SalesGraph = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: props.expense,
+        data: props.expense?.slice(-limit),
         label: "Expense",
         maxBarThickness: 10,
       },
@@ -24,12 +24,12 @@ const SalesGraph = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: props.income,
+        data: props.income?.slice(-limit),
         label: "Income",
         maxBarThickness: 10,
       },
     ],
-    labels: props.labels,
+    labels: props.labels?.slice(-limit),
   };
 
   const options = {
@@ -85,9 +85,13 @@ const SalesGraph = (props) => {
     <Card {...props}>
       <CardHeader
         action={
-          <Button endIcon={<ArrowDropDownIcon fontSize="small" />} size="small">
-            Last 7 days
-          </Button>
+          <Select value={limit} onChange={(e) => setLimit(e.target.value)}>
+            <MenuItem value={7}>Last 7</MenuItem>
+            <MenuItem value={14}>Last 14</MenuItem>
+            <MenuItem value={30}>Last 30</MenuItem>
+            <MenuItem value={100}>Last 100</MenuItem>
+            <MenuItem value={365}>All</MenuItem>
+          </Select>
         }
         title="Latest Transactions"
       />
@@ -102,18 +106,6 @@ const SalesGraph = (props) => {
           <Bar data={data} options={options} />
         </Box>
       </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          p: 2,
-        }}
-      >
-        <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
-          Learn more
-        </Button>
-      </Box>
     </Card>
   );
 };
