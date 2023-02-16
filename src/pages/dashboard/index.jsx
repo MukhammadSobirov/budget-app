@@ -10,6 +10,7 @@ import SalesGraph from "src/components/dashboard/SalesGraph";
 import PieChart from "src/components/dashboard/PieChart";
 import LatestTransactions from "src/components/dashboard/LatestTransactions";
 import DashboardLayout from "src/components/Layout/DashboardLayout";
+import { fetchStats, selectAllStats } from "src/redux/features/stats/statsSlice";
 
 function Page() {
   const dispatch = useDispatch();

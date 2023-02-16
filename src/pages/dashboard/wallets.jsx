@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import WalletListToolbar from "src/components/Wallet/WalletListToolbar";
 import WalletCard from "src/components/Wallet/WalletCard";
 import DashboardLayout from "src/components/Layout/DashboardLayout";
+import { fetchWallets } from "src/redux/features/wallets/walletThunk";
 
 const Page = () => {
   const dispatch = useDispatch();
