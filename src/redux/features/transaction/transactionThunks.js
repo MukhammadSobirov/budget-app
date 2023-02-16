@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchTransactions = createAsyncThunk("transaction/fetchTransactions", async (query) => {
-  const response = await fetch(`/api/transaction?page=${query.page}&size=${query.size}`);
+export const fetchTransactions = createAsyncThunk("transaction/fetchTransactions", async (endpoint) => {
+  const response = await fetch(endpoint);
   return await response.json();
 });
 

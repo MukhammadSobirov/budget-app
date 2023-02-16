@@ -12,7 +12,7 @@ const LatestTransactions = (props) => {
   const { transactions } = useSelector((state) => state.transaction);
 
   useEffect(() => {
-    dispatch(fetchTransactions({ size: 10, page: 0 }));
+    dispatch(fetchTransactions(`/api/transaction/?page=${0}&size=${10}`));
   }, [dispatch]);
 
   return (

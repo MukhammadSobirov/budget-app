@@ -27,13 +27,15 @@ const ITEM_HEIGHT = 48;
 const TransactionsListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
+  const currentWallet = useSelector((state) => state.wallet.currentWallet);
   const dispatch = useDispatch();
   const { transactions, count } = useSelector((state) => state.transaction);
 
   useEffect(() => {
-    dispatch(fetchTransactions({ size: limit, page: page }));
-  }, [dispatch, limit, page]);
+    if (currentWallet.id) {
+      dispatch(fetchTransactions(`/api/wallet/transaction/${currentWallet.id}?page=${page}&size=${limit}`));
+    }
+  }, [currentWallet.id, dispatch, limit, page]);
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

@@ -26,7 +26,7 @@ const TransactionForm = ({ open, isEdit = false, transaction, handleClose }) => 
     initialValues: {
       amount: isEdit ? transaction.amount : "",
       category: isEdit ? transaction.category.id : "",
-      wallet: isEdit ? transaction.wallet.id : "",
+      wallet: isEdit ? transaction.wallet.id : wallet.currentWallet.id || "",
       description: isEdit ? transaction.description : "",
       date: isEdit ? transaction.date : "",
     },
