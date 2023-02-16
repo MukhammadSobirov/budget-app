@@ -46,7 +46,7 @@ const TransactionsListResults = ({ ...rest }) => {
   };
 
   return (
-    <Card {...rest}>
+    <Card {...rest} sx={{ overflowX: "scroll" }}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>

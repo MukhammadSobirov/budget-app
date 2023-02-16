@@ -64,7 +64,7 @@ const PieChart = (props) => {
   ];
 
   return (
-    <Card {...props}>
+    <Card {...props} sx={{ overflowX: "scroll" }}>
       <CardHeader title={props.title} />
       <Divider />
       <CardContent>

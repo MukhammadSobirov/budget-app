@@ -78,17 +78,17 @@ function Page() {
         </Grid>
 
         <Grid container spacing={1} mt={2}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} width={{ xs: "150px", sm: "200px", md: "100%" }}>
             <SalesGraph
               expense={currentStats?.pieChartData?.expenses}
               income={currentStats?.pieChartData?.incomes}
               labels={currentStats?.pieChartData?.labels}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} width={{ xs: "150px", sm: "200px", md: "100%" }}>
             <PieChart sx={{ height: "100%" }} title="Expenses by Category" />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} width={{ xs: "150px", sm: "200px", md: "100%" }}>
             <LatestTransactions />
           </Grid>
         </Grid>

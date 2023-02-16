@@ -17,10 +17,10 @@ const LatestTransactions = (props) => {
   }, [dispatch]);
 
   return (
-    <Card {...props}>
+    <Card {...props} sx={{ overflowX: "scroll" }}>
       <CardHeader title="Latest Transactions" />
       <PerfectScrollbar>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={{ minWidth: { xs: 200, md: 800 } }}>
           <Table>
             <TableHead>
               <TableRow>

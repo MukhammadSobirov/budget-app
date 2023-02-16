@@ -19,7 +19,7 @@ const Page = () => {
       >
         <Container maxWidth={false}>
           <CategoryListToolbar />
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3, width: { xs: "250px", sm: "350px", md: "100%" } }}>
             <CategoriesListResults />
           </Box>
         </Container>

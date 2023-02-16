@@ -82,7 +82,7 @@ const SalesGraph = (props) => {
   };
 
   return (
-    <Card {...props}>
+    <Card {...props} sx={{ overflowX: "scroll" }}>
       <CardHeader
         action={
           <Select value={limit} onChange={(e) => setLimit(e.target.value)}>

@@ -18,7 +18,7 @@ const Page = () => (
     >
       <Container maxWidth={false}>
         <TransactionListToolbar />
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3, width: { xs: "250px", sm: "350px", md: "100%" } }}>
           <TransactionsListResults />
         </Box>
       </Container>
