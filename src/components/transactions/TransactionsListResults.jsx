@@ -32,10 +32,10 @@ const TransactionsListResults = ({ ...rest }) => {
   const { transactions, count } = useSelector((state) => state.transaction);
 
   useEffect(() => {
-    if (currentWallet.id) {
+    if (currentWallet?.id) {
       dispatch(fetchTransactions(`/api/wallet/transaction/${currentWallet.id}?page=${page}&size=${limit}`));
     }
-  }, [currentWallet.id, dispatch, limit, page]);
+  }, [currentWallet?.id, dispatch, limit, page]);
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);

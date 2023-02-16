@@ -11,10 +11,15 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "POST":
       // Create a transaction
+      const category = await prisma.category.findUnique({
+        where: { id: req.body.category },
+      });
+
       try {
         const newTransaction = await prisma.transaction.create({
           data: {
             ...req.body,
+            transaction_type: category.type,
             user: {
               connect: {
                 id: session.user.id,
@@ -71,6 +76,12 @@ export default async function handler(req, res) {
     case "PATCH":
       // Update a transaction
       const { id, ...other } = req.body;
+
+      const foundCategory = await prisma.category.findUnique({
+        where: { id: other.category },
+      });
+
+      other.transaction_type = foundCategory.type;
 
       if (!id) return res.status(400).json({ message: "Missing transaction id" });
 

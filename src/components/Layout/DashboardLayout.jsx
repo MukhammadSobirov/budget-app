@@ -144,7 +144,7 @@ export default function DashboardLayout({ children }) {
           <Stack direction="row" width={"100%"} gap="30px" justifyContent="flex-end" alignItems={"center"}>
             <Select
               sx={{ backgroundColor: "white", width: "200px", height: "40px" }}
-              value={wallets.currentWallet.id}
+              value={wallets.currentWallet?.id}
               onChange={(e) => dispatch(setCurrentWallet(e.target.value))}
             >
               {wallets?.wallets?.map((wallet) => (
