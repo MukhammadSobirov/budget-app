@@ -70,7 +70,7 @@ const Login = () => {
                 <Button
                   color="error"
                   fullWidth
-                  onClick={() => formik.handleSubmit()}
+                  onClick={() => signIn("google")}
                   size="large"
                   startIcon={<Google />}
                   variant="contained"

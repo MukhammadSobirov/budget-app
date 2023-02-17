@@ -7,6 +7,7 @@ import { Box, Button, Checkbox, Container, FormHelperText, TextField, Typography
 import { Google } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { Stack } from "@mui/system";
+import { signIn } from "next-auth/react";
 
 const Register = () => {
   const formik = useFormik({
@@ -149,7 +150,7 @@ const Register = () => {
               <Button
                 color="error"
                 fullWidth
-                onClick={() => formik.handleSubmit()}
+                onClick={() => signIn("google")}
                 size="large"
                 startIcon={<Google />}
                 variant="contained"

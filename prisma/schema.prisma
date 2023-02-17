@@ -26,9 +26,11 @@ model User {
   name        String
   surname     String
   password    String
+  avatar      String?
   role        Role          @default(USER)
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
+  google_id   String?       @unique
   Wallet      Wallet[]
   Category    Category[]
   Transaction Transaction[]
