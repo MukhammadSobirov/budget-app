@@ -80,13 +80,22 @@ function Page() {
         <Grid container spacing={1} mt={2}>
           <Grid item xs={12} md={8} width={{ xs: "150px", sm: "200px", md: "100%" }}>
             <SalesGraph
-              expense={currentStats?.pieChartData?.expenses}
-              income={currentStats?.pieChartData?.incomes}
-              labels={currentStats?.pieChartData?.labels}
+              expense={currentStats?.barChartData?.expenses}
+              income={currentStats?.barChartData?.incomes}
+              labels={currentStats?.barChartData?.labels}
             />
           </Grid>
           <Grid item xs={12} md={4} width={{ xs: "150px", sm: "200px", md: "100%" }}>
-            <PieChart sx={{ height: "100%" }} title="Expenses by Category" />
+            <PieChart
+              sx={{ height: "100%" }}
+              title="Transactions by Category"
+              incomes={currentStats?.pieChartData?.incomes}
+              expenses={currentStats?.pieChartData?.expenses}
+              incomeLabels={currentStats?.pieChartData?.incomeLabels}
+              expenseLabels={currentStats?.pieChartData?.expenseLabels}
+              incomeHexColors={currentStats?.pieChartData?.incomeHexColors}
+              expenseHexColors={currentStats?.pieChartData?.expenseHexColors}
+            />
           </Grid>
           <Grid item xs={12} width={{ xs: "150px", sm: "200px", md: "100%" }}>
             <LatestTransactions />

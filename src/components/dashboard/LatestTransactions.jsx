@@ -1,11 +1,8 @@
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Box, Button, Card, CardHeader, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { Box, Card, CardHeader, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SeverityPill } from "../SeverityPill";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
-import Link from "next/link";
 import { fetchTransactions } from "src/redux/features/transaction/transactionThunks";
 
 const LatestTransactions = (props) => {
@@ -37,7 +34,9 @@ const LatestTransactions = (props) => {
                 <TableRow hover key={t.id}>
                   <TableCell>{t.wallet.name}</TableCell>
                   <TableCell>{t.category.name}</TableCell>
-                  <TableCell>${t.amount}</TableCell>
+                  <TableCell>
+                    {t.wallet.currency} {t.amount}
+                  </TableCell>
                   <TableCell>{t.date}</TableCell>
                   <TableCell>
                     <SeverityPill color={t.category.type === "EXPENSE" ? "error" : "success"}>
@@ -50,17 +49,6 @@ const LatestTransactions = (props) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          p: 2,
-        }}
-      >
-        <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small" variant="text">
-          <Link href="/dashboard/transactions">View all</Link>
-        </Button>
-      </Box>
     </Card>
   );
 };

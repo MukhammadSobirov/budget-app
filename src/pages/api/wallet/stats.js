@@ -16,7 +16,11 @@ export default async function handler(req, res) {
           user_id: session.user.id,
         },
         include: {
-          Transaction: true,
+          Transaction: {
+            include: {
+              category: true,
+            },
+          },
         },
       });
 
@@ -43,7 +47,8 @@ export default async function handler(req, res) {
 
         const averageExpense = totalExpense / expenses.length;
 
-        const pieChartData = {
+        // Bar chart data
+        const barChartData = {
           labels: [],
           expenses: [],
           incomes: [],
@@ -55,12 +60,49 @@ export default async function handler(req, res) {
         const dates = [...new Set([...expenseDates, ...incomeDates])].sort();
 
         dates.forEach((date) => {
-          pieChartData.labels.push(date);
-          pieChartData.expenses.push(
+          barChartData.labels.push(date);
+          barChartData.expenses.push(
             expenses.filter((e) => e.date === date).reduce((acc, curr) => acc + curr.amount, 0)
           );
-          pieChartData.incomes.push(income.filter((e) => e.date === date).reduce((acc, curr) => acc + curr.amount, 0));
+          barChartData.incomes.push(income.filter((e) => e.date === date).reduce((acc, curr) => acc + curr.amount, 0));
         });
+        // End bar chart data
+
+        // Pie chart data
+        const pieChartData = {
+          expenseLabels: [],
+          expenseHexColors: [],
+          expenses: [],
+          incomeLabels: [],
+          incomeHexColors: [],
+          incomes: [],
+        };
+
+        const expenseCategories = expenses.map((e) => e.category.name);
+        const uniqueExpenseCategories = [...new Set(expenseCategories)];
+
+        const incomeCategories = income.map((e) => e.category.name);
+        const uniqueIncomeCategories = [...new Set(incomeCategories)];
+
+        uniqueExpenseCategories.forEach((category) => {
+          pieChartData.expenseLabels.push(category);
+          pieChartData.expenses.push(
+            expenses.filter((e) => e.category.name === category).reduce((acc, curr) => acc + curr.amount, 0)
+          );
+          const randomHexColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+          pieChartData.expenseHexColors.push(randomHexColor);
+        });
+
+        uniqueIncomeCategories.forEach((category) => {
+          pieChartData.incomeLabels.push(category);
+          pieChartData.incomes.push(
+            income.filter((e) => e.category.name === category).reduce((acc, curr) => acc + curr.amount, 0)
+          );
+          const randomHexColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+          pieChartData.incomeHexColors.push(randomHexColor);
+        });
+
+        // End pie chart data
 
         return {
           id: wallet.id,
@@ -71,6 +113,7 @@ export default async function handler(req, res) {
           totalIncome: Math.round(totalIncome * 100) / 100,
           averageExpense: Math.round(averageExpense * 100) / 100,
           savingsRate: Math.round(((totalIncome - totalExpense) / totalIncome) * 100) / 100,
+          barChartData,
           pieChartData,
         };
       });

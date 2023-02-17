@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const SalesGraph = (props) => {
   const theme = useTheme();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(7);
 
   const data = {
     datasets: [

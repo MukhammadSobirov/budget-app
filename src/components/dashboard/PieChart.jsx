@@ -1,23 +1,32 @@
 import { Doughnut } from "react-chartjs-2";
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from "@mui/material";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import BookIcon from "@mui/icons-material/Book";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  FormControlLabel,
+  Switch,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { useState } from "react";
 
 const PieChart = (props) => {
   const theme = useTheme();
+  const [isIncome, setIsIncome] = useState(false);
 
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
-        backgroundColor: ["#3F51B5", "#e53935", "#FB8C00"],
+        data: isIncome ? props.incomes : props.expenses,
+        backgroundColor: isIncome ? props.incomeHexColors : props.expenseHexColors,
         borderWidth: 8,
         borderColor: "#FFFFFF",
         hoverBorderColor: "#FFFFFF",
       },
     ],
-    labels: ["Rent", "Food", "Mobile"],
+    labels: isIncome ? props.incomeLabels : props.expenseLabels,
   };
 
   const options = {
@@ -42,31 +51,16 @@ const PieChart = (props) => {
     },
   };
 
-  const expenses = [
-    {
-      title: "Rent",
-      value: 63,
-      icon: ApartmentIcon,
-      color: "#3F51B5",
-    },
-    {
-      title: "Food",
-      value: 15,
-      icon: FastfoodIcon,
-      color: "#E53935",
-    },
-    {
-      title: "Education",
-      value: 23,
-      icon: BookIcon,
-      color: "#FB8C00",
-    },
-  ];
-
   return (
     <Card {...props} sx={{ overflowX: "scroll" }}>
       <CardHeader title={props.title} />
       <Divider />
+      <FormControlLabel
+        sx={{ ml: 2, mt: 2 }}
+        control={<Switch checked={isIncome} onChange={() => setIsIncome(!isIncome)} />}
+        label={isIncome ? "Income" : "Expense"}
+      />
+
       <CardContent>
         <Box
           sx={{
@@ -82,24 +76,41 @@ const PieChart = (props) => {
             justifyContent: "center",
             pt: 2,
           }}
+          flexWrap="wrap"
         >
-          {expenses.map(({ color, icon: Icon, title, value }) => (
-            <Box
-              key={title}
-              sx={{
-                p: 1,
-                textAlign: "center",
-              }}
-            >
-              <Icon color="action" />
-              <Typography color="textPrimary" variant="body1">
-                {title}
-              </Typography>
-              <Typography style={{ color }} variant="h4">
-                {value}%
-              </Typography>
-            </Box>
-          ))}
+          {isIncome
+            ? props.incomeLabels?.map((income, indx) => (
+                <Box
+                  key={indx}
+                  sx={{
+                    p: 1,
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography color="textPrimary" variant="body1">
+                    {income}
+                  </Typography>
+                  <Typography style={{ color: props.incomeHexColors[indx] }} variant="h4">
+                    {Math.round((props.incomes[indx] / props.incomes.reduce((a, b) => a + b)) * 100)}%
+                  </Typography>
+                </Box>
+              ))
+            : props.expenseLabels?.map((expense, indx) => (
+                <Box
+                  key={indx}
+                  sx={{
+                    p: 1,
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography color="textPrimary" variant="body1">
+                    {expense}
+                  </Typography>
+                  <Typography style={{ color: props.expenseHexColors[indx] }} variant="h4">
+                    {Math.round((props.expenses[indx] / props.expenses.reduce((a, b) => a + b)) * 100)}%
+                  </Typography>
+                </Box>
+              ))}
         </Box>
       </CardContent>
     </Card>
