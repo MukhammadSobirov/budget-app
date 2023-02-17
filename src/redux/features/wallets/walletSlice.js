@@ -54,8 +54,7 @@ const walletSlice = createSlice({
         state.status = "success";
         state.wallets = action.payload.wallets;
         state.count = action.payload.count;
-        state.currentWallet =
-          action.payload.wallets.find((wallet) => wallet.is_primary === true) || action.payload.wallets[0];
+        state.currentWallet = action.payload.wallets ? action.payload.wallets[0] : {};
       })
       .addCase(fetchWallets.rejected, (state) => {
         state.status = "failed";

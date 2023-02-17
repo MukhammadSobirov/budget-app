@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
+  if (!session.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   switch (req.method) {
     case "GET":
       const wallets = await prisma.wallet.findMany({

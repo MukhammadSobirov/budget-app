@@ -54,45 +54,51 @@ export const authOptions = {
     signUp: "/register",
   }, // end of pages
   callbacks: {
-    async signIn(user, account, profile) {
-      // check if user exists
-      if (account?.provider === "google") {
-        const userExists = await prisma.user.findUnique({
-          where: {
-            email: user.email,
-            google_id: user.id,
-          },
-        });
-
-        if (!userExists) {
-          // create user
-          const password = await bcrypt.hash(user.email, 10);
-          await prisma.user.create({
-            data: {
+    async signIn({ user, account }) {
+      try {
+        if (account?.provider === "google") {
+          const userExists = await prisma.user.findUnique({
+            where: {
               email: user.email,
-              name: user.name.split(" ")[0],
-              surname: user.name.split(" ")[1],
-              password,
-              role: "USER",
-              avatar: user.image,
-              google_id: user.id,
             },
           });
+
+          if (!userExists) {
+            // create user
+            const password = await bcrypt.hash(user.email, 10);
+            await prisma.user.create({
+              data: {
+                email: user.email,
+                name: user.name.split(" ")[0],
+                surname: user.name.split(" ")[1],
+                password,
+                avatar: user.image,
+                google_id: user.id,
+              },
+            });
+            return true;
+          }
           return true;
         }
-        return true;
-      }
 
-      return true;
+        return true;
+      } catch (error) {
+        return false;
+      }
+      // check if user exists
     }, // end of signIn
 
-    jwt(params) {
+    async jwt(params) {
       //update token
-
-      if (params.user?.role) {
-        params.token.role = params.user.role;
-        params.token.user = params.user;
+      if (params.user) {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: params.user.email,
+          },
+        });
+        params.token.user = user;
       }
+
       return params.token;
     }, // end of jwt
     session(params) {

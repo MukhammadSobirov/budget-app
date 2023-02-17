@@ -30,7 +30,7 @@ const LatestTransactions = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {transactions.map((t) => (
+              {transactions?.map((t) => (
                 <TableRow hover key={t.id}>
                   <TableCell>{t.wallet.name}</TableCell>
                   <TableCell>{t.category.name}</TableCell>
