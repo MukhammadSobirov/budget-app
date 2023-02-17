@@ -46,7 +46,7 @@ export const authOptions = {
           response_type: "code",
         },
       },
-      checks: ["state"],
+      checks: ["none"],
     }),
   ], // end of providers
   pages: {
@@ -56,7 +56,7 @@ export const authOptions = {
   callbacks: {
     async signIn(user, account, profile) {
       // check if user exists
-      if (account.provider === "google") {
+      if (account?.provider === "google") {
         const userExists = await prisma.user.findUnique({
           where: {
             email: user.email,
