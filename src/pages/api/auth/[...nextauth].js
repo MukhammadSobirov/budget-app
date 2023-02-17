@@ -46,6 +46,7 @@ export const authOptions = {
           response_type: "code",
         },
       },
+      checks: ["state"],
     }),
   ], // end of providers
   pages: {
