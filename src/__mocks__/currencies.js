@@ -4,6 +4,10 @@ export const currencies = [
     label: "$",
   },
   {
+    value: "UZS",
+    label: "UZS",
+  },
+  {
     value: "EUR",
     label: "€",
   },
