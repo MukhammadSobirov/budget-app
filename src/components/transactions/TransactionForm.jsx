@@ -17,7 +17,7 @@ const TransactionForm = ({ open, isEdit = false, transaction, handleClose }) => 
   const wallet = useSelector((state) => state.wallet);
 
   useEffect(() => {
-    if (category.status === "idle") dispatch(fetchCategories({ size: 1000, page: 0 }));
+    dispatch(fetchCategories({ size: 1000, page: 0 }));
     if (wallet.status === "idle") dispatch(fetchWallets());
   }, [category.status, dispatch, wallet.status]);
 
